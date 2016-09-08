@@ -1,0 +1,42 @@
+/*
+  Analog Input
+ Demonstrates analog input by reading a potentiometer on analog pin 0 and turning on and off a light emitting diode(LED) connected to digital pin 13.
+ The amount of time the LED will be on and off depends on the value obtained by analogRead().
+
+ The circuit:
+ * center pin of the potentiometer to the analog pin
+ * one side pin (either one) to ground
+ * the other side pin to +5V
+
+ Created by David Cuartielles
+ modified 30 Aug 2011
+ By Tom Igoe
+ modified 8 Aug 2016
+ By Mohit Ahuja
+ 
+ The original code is in the public domain:
+ http://www.arduino.cc/en/Tutorial/AnalogInput
+
+ */
+
+int sensorPin = A0;    // select the input pin for the potentiometer
+int ledPin = 13;      // select the pin for the LED
+int sensorValue = 0;  // variable to store the value coming from the sensor
+
+void setup() {
+  // declare the ledPin as an OUTPUT:
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // read the value from the sensor:
+  sensorValue = analogRead(sensorPin);
+  // turn the LED on
+  digitalWrite(ledPin, HIGH);
+  // The LED stays on for <sensorValue> milliseconds:
+  delay(sensorValue);
+  // turn the LED off:
+  digitalWrite(ledPin, LOW);
+  // The LED stays turned off for <sensorValue> milliseconds:
+  delay(sensorValue);
+}
