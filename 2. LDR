@@ -5,32 +5,36 @@
  * signal pin of the LDR to the analog pin A0
  * GND pin to ground
  * VCC side pin to +5V
-
-Created by Mohit Ahuja on 8-9-16
  */
 
-int sensorPin = A0;    // select the input pin for the potentiometer
-int ledPin = 13;      // select the pin for the LED
-int sensorValue = 0;  // variable to store the value coming from the sensor
-
-void setup() {
-  // declare the ledPin as an OUTPUT:
-  pinMode(ledPin, OUTPUT);
+int photocellPin = 0;     // the cell and 10K pulldown are connected to a0
+int photocellReading;     // the analog reading from the analog resistor divider
+ 
+void setup(void) {
+  // We'll send debugging information via the Serial monitor
+  Serial.begin(9600);   
 }
-
-void loop() {
-  // read the value from the sensor:
-  sensorValue = analogRead(sensorPin);
-  // turn the ledPin on
-  digitalWrite(ledPin, HIGH);
-  // stop the program for <sensorValue> milliseconds:
-  delay(sensorValue);
-  // turn the ledPin off:
-  digitalWrite(ledPin, LOW);
-  // stop the program for for <sensorValue> milliseconds:
-  delay(sensorValue);
+ 
+void loop(void) {
+  photocellReading = analogRead(photocellPin);  
+ 
+  Serial.print("Analog reading = ");
+  Serial.print(photocellReading);     // the raw analog reading
+ 
+  // We'll have a few thresholds, qualitatively determined
+  if (photocellReading < 10) {
+    Serial.println(" - Dark");
+  } else if (photocellReading < 200) {
+    Serial.println(" - Dim");
+  } else if (photocellReading < 500) {
+    Serial.println(" - Light");
+  } else if (photocellReading < 800) {
+    Serial.println(" - Bright");
+  } else {
+    Serial.println(" - Very bright");
+  }
+  delay(1000);
 }
-
 /*
 The Blink frequency of the LED attached to pin 13 is dependent upon the light falling on the LDR sensor. 
 Higher light intensity will cause faster blinking. And vice-versa
